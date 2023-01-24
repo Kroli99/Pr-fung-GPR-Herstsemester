@@ -16,9 +16,8 @@ def is_prime(n):
 
 #3 a)
 def next_prime(n):
-    if is_prime(n) == True:
-        n = n + 1
-    while is_prime(n) != True:
+    n = n + 1
+    while is_prime(n) == False:
         n = n + 1
     return n
 
@@ -26,12 +25,15 @@ print(next_prime(37))
 
 #3 b)
 def prime_dist(start, dist):
-    new_prime = 0
-    if is_prime(start) == True:
-        new_prime = next_prime(start)
-        if new_prime - start < dist and new_prime < 10 * start:
-            new_prime = next_prime(new_prime)
-        elif new_prime - start >= dist:
-            return (start, new_prime)
+    if is_prime(start) == False:
+        first_prime = next_prime(start)
+        second_prime = next_prime(first_prime)
+    else:
+        first_prime = start
+        second_prime = next_prime(first_prime)
+    while second_prime - first_prime < dist and second_prime < 10 * start:
+        first_prime = next_prime(first_prime)
+        second_prime = next_prime(second_prime)
+    return first_prime, second_prime
 
 print(prime_dist(3, 6))
